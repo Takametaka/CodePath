@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	
 	
 	
-	fprintf(T,"digraph tree{\n");
+	fprintf(T,"graph tree{\n");
 	fprintf(stdout,"graph tree{\n");
 	
 	Node Rt = NULL;

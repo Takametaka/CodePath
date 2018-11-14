@@ -93,8 +93,8 @@ void drawDot(Node Rt, FILE *T) {
 	}
 	if (Rt->p != NULL)
 	{
-		fprintf(T,"%d->%d\n",Rt->p->val,Rt->val);
-		fprintf(stdout,"%d->%d\n",Rt->p->val,Rt->val);
+		fprintf(T,"%d--%d\n",Rt->p->val,Rt->val);
+		fprintf(stdout,"%d--%d\n",Rt->p->val,Rt->val);
 	}
 	
 	drawDot(Rt->g,T);

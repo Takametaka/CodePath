@@ -28,11 +28,11 @@ int main(int argc, char **argv)
 	}
 	
 	int i2,j;
-	for (i2 = 10; i2 < 129/3; i2++)
+	for (i2 = 10; i2 < 128/3; i2++)
 	{
 		for (j = 0; j < 3; j++)
 		{
-			printf("%3d : %1c : %3d  |  ",i2*3 + j,i2*3 + j,ASCII[i2*3 + j]);
+			printf("%3d : %2c : %3d  |  ",i2*3 + j + 2,i2*3 + j + 2,ASCII[i2*3 + j + 2]);
 		}
 		printf("\n");
 	}
