@@ -4,6 +4,14 @@
 
 int main(int argc, char **argv)
 {
+	
+	if (argc != 3)
+	{
+		return 0;
+	}
+	
+	randNum(atoi(argv[1]),atoi(argv[2]));
+	
 	FILE *F;
 	F = fopen("tree.data","r+");
 	if (F == NULL) exit(1);
@@ -12,26 +20,27 @@ int main(int argc, char **argv)
 	T = fopen("tree.dot","w+");
 	if (T == NULL) exit(1);
 	
-	fprintf(T,"graph tree{\nrankdir=LR;\n");
+	
+	
+	fprintf(T,"digraph tree{\n");
 	fprintf(stdout,"graph tree{\n");
 	
 	Node Rt = NULL;
 	Rt = createRoot();
 	
-	int *i = NULL;
-	i = malloc(sizeof(int));
-	if (i == NULL) exit(2);
+	int i;
 	
-	while(fscanf(F,"%d",i) != EOF) {
-		if(createChild(Rt,*i,T) == -1)
-		{
-			exit(EXIT_FAILURE);
-		}
+	while(fscanf(F,"%d",&i) != EOF) {
+		scan_createChild(Rt,i);
 	}
 	
+	drawDot(Rt,T);
 	
 	fprintf(T,"}\n");
 	fprintf(stdout,"}\n");
+	
+	
+	fclose(T);
 	
 	return 0;
 }

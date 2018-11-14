@@ -1,6 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include "tree.h"
+
+void randNum(int n,int k) {
+	FILE *F1 = NULL;
+	F1 = fopen("tree.data","wr");
+	if (F1 == NULL)
+	{
+		fprintf(stderr,"FAILED TO OPEN F1\n");
+		exit(EXIT_FAILURE);
+	}
+	
+	int i2;
+	srand( getpid() );
+	for (i2 = 0; i2 < n; i2++)
+	{
+		fprintf(F1,"%d ",rand()%k);
+	}
+	fclose(F1);
+}
 
 Node createRoot() { //créé un arbre vide
 	Node N = NULL;
@@ -10,69 +30,74 @@ Node createRoot() { //créé un arbre vide
 		return NULL;
 	}
 	N->g = N->d = NULL;
-	N->val = NULL;
 	return N;
 }
 
-int createChild(Node Nd,int i,FILE *T) { //ajoute i dans l'arbre recursivement
+void createChild(Node Nd,int i,int pos) { //appel ex : creatChild(Nd,i,0) pos = 0 -> g pos = 1 -> d
 	
-	if (Nd->val == NULL)
+	if (pos == 0)
 	{
-		Nd->val = malloc(sizeof(int));
-		if (Nd->val == NULL) return -1;
-		*(Nd->val) = i;
-		return 1;
+		Nd->g = createRoot();
+		Nd->g->val = i;
+		Nd->g->p = Nd;
 	}
 	
-	
-	if (i > *(Nd->val))
+	if (pos == 1)
 	{
-		if (Nd->d == NULL)
-		{
-			Node D = createRoot();
-			if (D == NULL)
-			{
-				return -1;
-			}
-			D->val = malloc(sizeof(int));
-			if (D->val == NULL) return -1;
-			*(D->val) = i;
-			Nd->d = D;
-			//~ printf("%d\n",Nd->d->val);
-			fprintf(T,"\t%d--%d;\n",*(Nd->val),*(Nd->d->val));
-			fprintf(stdout,"\t%d--%d;\n",*(Nd->val),*(Nd->d->val));
-			return 1;
-		}
-		else
-		{
-			return createChild(Nd->d,i,T);
-		}
-		return -1;
+		Nd->d = createRoot();
+		Nd->d->val = i;
+		Nd->d->p = Nd;
 	}
 	
-	if (i < *(Nd->val))
+}
+
+void scan_createChild(Node Nd, int i) {
+	
+	if (i < Nd->val)
 	{
 		if (Nd->g == NULL)
 		{
-			Node G = createRoot();
-			if (G == NULL)
-			{
-				return -1;
-			}
-			G->val = malloc(sizeof(int));
-			if (G->val == NULL) return -1;
-			*(G->val) = i;
-			Nd->g = G;
-			fprintf(T,"\t%d--%d;\n",*(Nd->val),*(G->val));
-			fprintf(stdout,"\t%d--%d;\n",*(Nd->val),*(G->val));
-			return 1;
+			createChild(Nd,i,0);
 		}
 		else
 		{
-			return createChild(Nd->g,i,T);
+			scan_createChild(Nd->g,i);
 		}
-		return -1;
+		return;
+	}
+	if (i > Nd->val)
+	{
+		if (Nd->d == NULL)
+		{
+			createChild(Nd,i,1);
+		}
+		else
+		{
+			scan_createChild(Nd->d,i);
+		}
+		return;
+	}
+	if (i == Nd->val)
+	{
+		return;
+	}
+}
+
+
+
+void drawDot(Node Rt, FILE *T) {
+	
+	if (Rt == NULL)
+	{
+		return;
+	}
+	if (Rt->p != NULL)
+	{
+		fprintf(T,"%d->%d\n",Rt->p->val,Rt->val);
+		fprintf(stdout,"%d->%d\n",Rt->p->val,Rt->val);
 	}
 	
-	return 0;
+	drawDot(Rt->g,T);
+	
+	drawDot(Rt->d,T);
 }
