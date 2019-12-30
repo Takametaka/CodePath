@@ -20,6 +20,7 @@ int main(int argc, char **argv)
     
     for(int i = 0; i < 96; i++)
         printf("%c : %d\n",(char)(i + 0x20),freq[i]);
-
+    
+    close(fd);
     return 0;
 }
