@@ -4,7 +4,7 @@ CFLAGS=-Wall -Werror -Wextra
 run: main
 	./$< tree.data
 	dot -Tpng tree.dot -o tree.png
-	eog tree.png
+	feh tree.png
 
 main: main.c
 	$(CC) $(CFLAGS) $< -o $@ 
