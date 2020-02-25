@@ -18,3 +18,9 @@ Ex4 : *Entier premier ?*
 Ex5 : *Estimation de phi avec la suite de fibonacci*  
 
 Ex6 : *Arbre binaire de recherche a partir d'entier d'un fichier*  
+
+Ex7 : *Amelioration de Ex6 colorant la valeure recherchée*
+
+Ex8 : *Verifier le parenthésage d'un expression*
+
+Ex9 : *Parser et resoudre une expression*
