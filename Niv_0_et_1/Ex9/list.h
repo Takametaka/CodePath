@@ -41,4 +41,8 @@ struct _token_tree {
 };
 typedef struct _token_tree token_tree_t;
 
+token_tree_t *new_tree();
+
+void destroy_tree();
+
 #endif

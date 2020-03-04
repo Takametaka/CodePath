@@ -9,6 +9,8 @@ int isCorrect(char *str);
 
 token_list_t *lex(char *str);
 
+token_tree_t *parse(token_list_t *list);
+
 //MAIN
 int main(int argc, char **argv)
 {
@@ -98,4 +100,9 @@ token_list_t *lex(char *str)
         str++;
     }
     return list;
+}
+
+token_tree_t *parse(token_list_t *list)
+{
+    //shunting yard algorithm to build AST from infix notation
 }

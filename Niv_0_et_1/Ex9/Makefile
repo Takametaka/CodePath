@@ -4,6 +4,19 @@ CFLAGS=-Wall -Werror -Wextra
 run: ex9.out
 	./$< "9+0/6*(5+6+8+6/2)"
 	#valgrind ./$< "9+0/6*(5+6+8+6/2)"
+	#  +
+	# / \
+	# 9 *__
+	#  /   \
+	#  :   +
+	# / \ / \
+	# 0 6 5 +
+	#      / \
+	#      6 +
+	#       / \
+	#       8 :
+	#        / \
+	#        6 2
 
 ex9.out: ex9.c list.o
 	$(CC) $(CFLAGS) $< -o $@ list.o

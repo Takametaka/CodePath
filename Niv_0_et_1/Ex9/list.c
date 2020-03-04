@@ -94,3 +94,29 @@ void display_list(token_list_t *list)
     }
     printf("\n");
 }
+
+//TREE
+token_tree_t *new_tree(token_t *data)
+{
+    token_list_t *tree = (token_tree_t *)malloc(sizeof(token_tree_t));
+    if(tree == NULL)
+    {
+        fprintf(stderr,"Erreur de malloc dans la creation de l'arbre\n");
+        exit(1);
+    }
+    tree->data = data;
+    tree->l = NULL;
+    tree->r = NULL;
+    return tree;
+}
+
+void destroy_tree(token_tree_t *tree)
+{
+    if(tree == NULL) return;
+
+    destroy_tree(tree->l);
+    destroy_tree(tree->r);
+
+    if(tree->data != NULL) free(tree->data);
+    free(tree);
+}
