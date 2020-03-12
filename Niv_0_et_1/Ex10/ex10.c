@@ -12,10 +12,11 @@
 //rgb stored as 24 most right bit of uint32_t
 
 uint32_t color_function(int n)
-{   
-    uint8_t r = 0xFF*sin(n);
+{
+    double perc = (double)n/(double)MAX_IT;   
+    uint8_t r = 0xFF*perc*perc;
     uint8_t g = 0x00;
-    uint8_t b = 0xFF*cos(n);
+    uint8_t b = 0x55*sqrt(perc);
     return (r<<16) + (g<<8) + b;
 }
 
@@ -50,17 +51,13 @@ int main(int argc, char **argv)
             double complex c = (x / sizex) * width_x - (width_x / 2.0 - creal(center)) + I * ( (y / sizey) * width_y - (width_y / 2.0 + cimag(center)) );
             uint32_t color = 0x000000;
             double complex z = 0.0 + I*0.0;
-            int pow = 1;
             for(int it = 0; it < MAX_IT; it++)
             {
 
-                //if(creal(z)*creal(z) + cimag(z)*cimag(z) > 4)
-                //{ color = color_function(it); break; }
-                double R2 = creal(z)*creal(z) + cimag(z)*cimag(z);
-                if(R2 > 1000000)
-                { color = color_function(log2(R2)/pow); break; }
+                if(creal(z)*creal(z) + cimag(z)*cimag(z) > 4)
+                { color = color_function(it); break; }
                 z = z*z+c;
-                pow *= 2;
+
             }
             fprintf(F,"%d %d %d\n", (color>>16) & 0x000000FF, (color>>8) & 0x000000FF, color & 0x000000FF);
         }
